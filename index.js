@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 //Token blank for commited version. Todo: add text file and read token from file, gitignore
-const token = '';
+const token = 'NzQ0NjgzMjMzNTMwMzQ3NTcw.XzmyTg.ElhQmNEdMDazKWHkRWgyI8eiEj4';
 
 const PREFIX = '!';
 
