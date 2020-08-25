@@ -18,7 +18,10 @@ client.on('message', message=> {
     switch(args[0]){
         case 'embed':
             const embed = new Discord.RichEmbed()
-            .addField('Player Name', message.author.username);
+            .setTitle('User Information')
+            .addField('Player Name', message.author.username)
+            .addField('Version', version)
+            .setColor(0XF1C40F)
             message.channel.send(embed);
             break;
         case 'ping':
