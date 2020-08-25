@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 //Token blank for commited version. Todo: add text file and read token from file, gitignore
-const token = '';
+const token = 'NzQ0NjgzMjMzNTMwMzQ3NTcw.XzmyTg.8Td3Jks1B3oZmvZs-iJGgxx7PZM';
 
 const PREFIX = '!';
 
@@ -17,11 +17,13 @@ client.on('message', message=> {
 
     switch(args[0]){
         case 'embed':
-            const embed = new Discord.RichEmbed()
+            var purp = [255, 0, 255];
+            const embed = new Discord.MessageEmbed()
             .setTitle('User Information')
             .addField('Player Name', message.author.username)
             .addField('Version', version)
-            .setColor(0XF1C40F)
+            .setThumbnail(message.author.avatarURL)
+            .setColor(purp)
             message.channel.send(embed);
             break;
         case 'ping':
