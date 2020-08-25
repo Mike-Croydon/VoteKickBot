@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 //Token blank for commited version. Todo: add text file and read token from file, gitignore
-const token = 'NzQ0NjgzMjMzNTMwMzQ3NTcw.XzmyTg.ElhQmNEdMDazKWHkRWgyI8eiEj4';
+const token = '';
 
 const PREFIX = '!';
 
@@ -16,6 +16,11 @@ client.on('message', message=> {
     let args = message.content.substr(PREFIX.length).split(" ");
 
     switch(args[0]){
+        case 'embed':
+            const embed = new Discord.RichEmbed()
+            .addField('Player Name', message.author.username);
+            message.channel.send(embed);
+            break;
         case 'ping':
             message.channel.send('pong');
             break;
