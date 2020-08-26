@@ -47,70 +47,58 @@ client.on('message', message=> {
                 if(!args[1]) return message.reply('Error: please specify number of messages to delete');
                 message.channel.bulkDelete(args[1]);
                 break;
-
+        case 'kick':
+            const kickuser = message.mentions.users.first();
+            // If we have a user mentioned
+            if (kickuser) 
+            {
+              // Now we get the member from the user
+              const member = message.guild.member(kickuser);
+                member
+                  .kick('Optional reason that will display in the audit logs')
+                  .then(() => {
+                    // We let the message author know we were able to kick the person
+                    message.reply(`Successfully kicked ${kickuser.tag}`);
+                  })
+                  .catch(err => {
+                    // An error happened
+                    // This is generally due to the bot not being able to kick the member,
+                    // either due to missing permissions or role hierarchy
+                    message.reply('I was unable to kick the member');
+                    // Log the error
+                    console.error(err);
+                  });
+            } 
+            // Otherwise, if no user was mentioned
+            else {message.reply("You didn't mention the user to kick!");}
+            break;
+        case 'makeAFK':
+          const AFKuser = message.mentions.users.first();
+          // If we have a user mentioned
+          if (AFKuser) {
+            // Now we get the member from the user
+            const member = message.guild.member(AFKuser);
+              member.voice
+                .setChannel(message.guild.afkChannel)
+                .then(() => {
+                  // We let the message author know we were able to kick the person
+                  message.reply(`Successfully moved ${AFKuser.tag}`);
+                })
+                .catch(err => {
+                  // An error happened
+                  // This is generally due to the bot not being able to kick the member,
+                  // either due to missing permissions or role hierarchy
+                  message.reply('Unable to move user');
+                  // Log the error
+                  console.error(err);
+                });
+        // Otherwise, if no user was mentioned
+          } else {
+            message.reply("You didn't mention the user to kick!");
+          } 
+          break; 
     }
 });
-
-client.on('message', message => {
-    // Ignore messages that aren't from a guild
-    if (!message.guild) return;
-  
-    // If the message content starts with "!kick"
-    if (message.content.startsWith('!kick')) {
-      // Assuming we mention someone in the message, this will return the user
-      // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
-      const user = message.mentions.users.first();
-      // If we have a user mentioned
-      if (user) {
-        // Now we get the member from the user
-        const member = message.guild.member(user);
-          member
-            .kick('Optional reason that will display in the audit logs')
-            .then(() => {
-              // We let the message author know we were able to kick the person
-              message.reply(`Successfully kicked ${user.tag}`);
-            })
-            .catch(err => {
-              // An error happened
-              // This is generally due to the bot not being able to kick the member,
-              // either due to missing permissions or role hierarchy
-              message.reply('I was unable to kick the member');
-              // Log the error
-              console.error(err);
-            });
-    // Otherwise, if no user was mentioned
-      } else {
-        message.reply("You didn't mention the user to kick!");
-      }
-    }
-    if (message.content.startsWith('!makeAFK')) {
-      // Assuming we mention someone in the message, this will return the user
-      // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
-      const user = message.mentions.users.first();
-      // If we have a user mentioned
-      if (user) {
-        // Now we get the member from the user
-        const member = message.guild.member(user);
-          member.voice
-            .setChannel(message.guild.afkChannel)
-            .then(() => {
-              // We let the message author know we were able to kick the person
-              message.reply(`Successfully moved ${user.tag}`);
-            })
-            .catch(err => {
-              // An error happened
-              // This is generally due to the bot not being able to kick the member,
-              // either due to missing permissions or role hierarchy
-              message.reply('Unable to move user');
-              // Log the error
-              console.error(err);
-            });
-    // Otherwise, if no user was mentioned
-      } else {
-        message.reply("You didn't mention the user to kick!");
-      }
-    }
-  });
 
 
 
