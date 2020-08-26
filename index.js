@@ -1,11 +1,15 @@
 const Discord = require('discord.js');
+const fetch = require("node-fetch");
+var fs = require('fs');
 //const fs = require('fs');
 const client = new Discord.Client();
 
 //Token blank for commited version. Todo: add text file and read token from file, gitignore
-const token = '';
+const token = fs.readFileSync('token/token.txt').toString();
+console.log(token);
 
 const PREFIX = '!';
+
 
 var version = '1.0.1'
 client.on('ready',() => {
