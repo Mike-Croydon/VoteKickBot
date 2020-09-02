@@ -43,10 +43,10 @@ client.on('message', message=> {
                 message.channel.send('Invalid args');
             }
             break;
-            case 'clear':
-                if(!args[1]) return message.reply('Error: please specify number of messages to delete');
-                message.channel.bulkDelete(args[1]);
-                break;
+        case 'clear':
+            if(!args[1]) return message.reply('Error: please specify number of messages to delete');
+            message.channel.bulkDelete(args[1]);
+            break;
         case 'kick':
             const kickuser = message.mentions.users.first();
             // If we have a user mentioned
@@ -97,6 +97,42 @@ client.on('message', message=> {
             message.reply("You didn't mention the user to kick!");
           } 
           break; 
+          case 'votekick':
+            const kickuser = message.mentions.users.first();
+            //check that the user being voted on is the in the same voicechannel as the kicker
+            if(message.member.voice.channel != kickuser.voice.channel)
+            {
+              message.channel.send("Kicker and kickee not in the same voice channel");
+              break;
+            }
+            if(!kickuser)
+            {
+              message.channel.send("No kickee specified")
+              break;
+            }
+            // If we have a user mentioned
+            if (kickuser) 
+            {
+              // Now we get the member from the user
+              const member = message.guild.member(kickuser);
+                member
+                  .kick('Optional reason that will display in the audit logs')
+                  .then(() => {
+                    // We let the message author know we were able to kick the person
+                    message.reply(`Successfully kicked ${kickuser.tag}`);
+                  })
+                  .catch(err => {
+                    // An error happened
+                    // This is generally due to the bot not being able to kick the member,
+                    // either due to missing permissions or role hierarchy
+                    message.reply('I was unable to kick the member');
+                    // Log the error
+                    console.error(err);
+                  });
+            } 
+            // Otherwise, if no user was mentioned
+            else {message.reply("You didn't mention the user to kick!");}
+            break;
     }
 });
 
