@@ -97,43 +97,24 @@ client.on('message', message=> {
             message.reply("You didn't mention the user to kick!");
           } 
           break; 
-          case 'votekick':
-            const kickuser = message.mentions.users.first();
-            //check that the user being voted on is the in the same voicechannel as the kicker
-            if(message.member.voice.channel != kickuser.voice.channel)
-            {
-              message.channel.send("Kicker and kickee not in the same voice channel");
-              break;
-            }
-            if(!kickuser)
-            {
-              message.channel.send("No kickee specified")
-              break;
-            }
-            // If we have a user mentioned
-            if (kickuser) 
-            {
-              // Now we get the member from the user
-              const member = message.guild.member(kickuser);
-                member
-                  .kick('Optional reason that will display in the audit logs')
-                  .then(() => {
-                    // We let the message author know we were able to kick the person
-                    message.reply(`Successfully kicked ${kickuser.tag}`);
-                  })
-                  .catch(err => {
-                    // An error happened
-                    // This is generally due to the bot not being able to kick the member,
-                    // either due to missing permissions or role hierarchy
-                    message.reply('I was unable to kick the member');
-                    // Log the error
-                    console.error(err);
-                  });
-            } 
-            // Otherwise, if no user was mentioned
-            else {message.reply("You didn't mention the user to kick!");}
+        case 'votekick':
+          const kickeeUser = message.mentions.users.first();
+          const kickerUser = message.author;
+          //check that a user was mentioned
+          if(!kickeeUser)
+          {
+            message.channel.send("Please specify a user to be kicked")
             break;
-    }
+          }
+          const kickeeMember = message.guild.member(kickeeUser);
+          const kickerMember = message.guild.member(kickerUser);          
+          //check that the user being voted on is the in the same voicechannel as the kicker
+          if(kickeeMember.voice.channel != kickerMember.voice.channel)
+          {
+            message.channel.send("Kicker and kickee not in the same voice channel");
+            break;
+          }
+  }
 });
 
 
