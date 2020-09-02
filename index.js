@@ -114,6 +114,20 @@ client.on('message', message=> {
             message.channel.send("Kicker and kickee not in the same voice channel");
             break;
           }
+          
+          const kickChannel = kickeeMember.voice.channel;
+          const channelMembers = kickChannel.members;
+          var numMembers = channelMembers.size;
+          console.log(numMembers);
+          var start = Date.now();
+          var delta = Date.now() - start;
+          while(delta < 30000)
+          {
+            
+          }
+
+          console.log("Made it to end of checks");
+          break;
   }
 });
 
